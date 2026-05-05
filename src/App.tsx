@@ -1,478 +1,441 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 import { 
-  Phone, 
-  Mail, 
-  MessageCircle, 
-  MapPin, 
-  Clock, 
-  ArrowRight, 
-  CheckCircle2, 
-  Video, 
-  Share2, 
-  MousePointerClick, 
-  TrendingUp, 
-  Users, 
-  Star,
-  Activity,
-  Award,
-  Play
+  ArrowRight,
+  Target,
+  Smartphone,
+  Video,
+  BarChart3,
+  CheckCircle2,
+  TrendingUp
 } from 'lucide-react';
 
-const Noise = () => (
-  <div 
-    className="pointer-events-none fixed inset-0 z-50 h-full w-full opacity-[0.02] mix-blend-overlay"
-    style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 400 400%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
-  />
-);
-
 export default function App() {
-  const WHATSAPP_NUMBER = "233536106660";
-  const PHONE_NUMBER = "0536106660";
-  const EMAIL = "info@elevantemedia.com";
-
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const { scrollYProgress } = useScroll();
+  const heroImageY = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: (custom = 0) => ({
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.8, delay: custom * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.8,
+        ease: [0.21, 0.47, 0.32, 0.98]
+      }
     })
   };
 
   return (
-    <div className="font-sans bg-luxury-black text-beige-100 min-h-screen relative selection:bg-beige-300 selection:text-black">
-      <Noise />
-      
+    <div className="font-sans bg-black text-white min-h-screen relative">
       {/* Navigation */}
-      <motion.nav 
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="fixed w-full z-50 top-0 border-b border-white/5 bg-luxury-black/60 backdrop-blur-xl"
-      >
-        <div className="max-w-[90rem] mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
-          <div className="font-serif text-2xl tracking-wide text-beige-100 flex items-center gap-2 relative group">
-            Elevante<span className="text-beige-300 italic font-medium">Media</span>
-            <div className="absolute -bottom-2 left-0 w-0 h-[1px] bg-beige-300 transition-all duration-500 group-hover:w-full" />
+      <nav className="fixed w-full z-50 top-0 border-b border-zinc-900 bg-black/80 backdrop-blur-xl">
+        <div className="max-w-[90rem] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-2 relative group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
+            <img 
+              src="/logo.png" 
+              alt="Elevante Media Logo" 
+              className="h-8 md:h-10 w-auto invert brightness-0 opacity-90 transition-opacity duration-300 group-hover:opacity-100" 
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling!.classList.remove('hidden');
+              }}
+            />
+            <div className="hidden font-semibold text-xl tracking-tight text-white items-center gap-1">
+              Elevante<span className="text-zinc-500 font-normal">Media</span>
+            </div>
           </div>
-          <div className="hidden md:flex items-center gap-10 text-sm tracking-[0.1em] uppercase text-beige-200">
-            <a href="#services" className="hover:text-beige-300 transition-colors duration-300">Services</a>
-            <a href="#about" className="hover:text-beige-300 transition-colors duration-300">About Us</a>
-            <a href="#contact" className="hover:text-beige-300 transition-colors duration-300">Contact</a>
+          
+          <div className="hidden md:flex items-center gap-10 text-sm tracking-wide text-zinc-400">
+            <a href="#problem" className="hover:text-white transition-colors duration-300">The Problem</a>
+            <a href="#solution" className="hover:text-white transition-colors duration-300">Our Method</a>
+            <a href="#services" className="hover:text-white transition-colors duration-300">Services</a>
+            <a href="#contact" className="hover:text-white transition-colors duration-300">Contact</a>
           </div>
+          
           <div className="flex items-center gap-4">
             <a 
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              href="https://wa.me/233200000000" 
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden flex items-center gap-2 bg-beige-100 text-luxury-black px-6 py-3 rounded-full font-medium hover:bg-white transition-all text-sm"
+              className="bg-white text-black px-6 py-2.5 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors duration-300"
             >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
-              <MessageCircle size={16} />
-              <span className="hidden sm:inline relative z-10">WhatsApp Us</span>
+              Get Customers
             </a>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden px-6 lg:px-12">
-        <div className="absolute inset-0 z-0">
-           {/* Ambient Lighting */ }
-           <div className="absolute top-[-10%] right-[-5%] w-[60%] h-[60%] bg-beige-400/10 blur-[150px] rounded-full mix-blend-screen" />
-           <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-beige-300/5 blur-[120px] rounded-full mix-blend-screen" />
-           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--color-luxury-black)_100%)] opacity-80" />
-        </div>
-        
-        {/* Enormous Background Typography */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.03] select-none z-0">
-           <span className="font-serif text-[18vw] font-bold leading-none tracking-tighter">ELEVANTE</span>
-        </div>
-        
-        <motion.div 
-          style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 max-w-[80rem] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-8 items-center"
-        >
-          <div className="lg:col-span-12 text-center flex flex-col items-center">
-            <motion.div 
-              custom={1} initial="hidden" animate="visible" variants={fadeUp}
-              className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8"
-            >
-              <div className="w-2 h-2 rounded-full bg-beige-300 animate-pulse" />
-              <span className="text-beige-200 uppercase tracking-[0.15em] text-[10px] sm:text-xs">
-                Premium Marketing Agency · Accra, Ghana
+      <main className="pt-20">
+        {/* Hero Section */}
+        <section className="relative px-6 lg:px-12 pt-24 pb-32 md:pt-40 md:pb-48 max-w-[90rem] mx-auto flex flex-col md:flex-row items-center gap-16">
+          <div className="flex-1 relative z-10 w-full md:w-1/2">
+            <motion.div custom={0} initial="hidden" animate="visible" variants={fadeUp} className="mb-6">
+              <span className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">
+                Premium Marketing That Brings You Clients
               </span>
             </motion.div>
             
             <motion.h1 
-              custom={2} initial="hidden" animate="visible" variants={fadeUp}
-              className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal leading-[1.05] tracking-tight mb-8"
+              custom={1} initial="hidden" animate="visible" variants={fadeUp}
+              className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-8"
             >
-              Helping premium<br/> 
-              <span className="text-gradient">businesses attract</span><br/>
-              <span className="italic font-light text-beige-300">premium clients.</span>
+              We don't just create content.<br />
+              <span className="text-gradient">We get you customers.</span>
             </motion.h1>
             
             <motion.p 
-              custom={3} initial="hidden" animate="visible" variants={fadeUp}
-              className="text-beige-200/80 text-lg md:text-xl lg:text-2xl max-w-3xl font-light leading-relaxed mb-12"
+              custom={2} initial="hidden" animate="visible" variants={fadeUp}
+              className="text-zinc-400 text-lg md:text-xl max-w-2xl font-light leading-relaxed mb-12"
             >
-              We use professional video content and targeted marketing to help you get more qualified leads, attract better clients, and ultimately make more money.
+              Based in Accra, Elevante Media builds strategic short-form video and marketing systems that turn attention into actual revenue for premium brands.
             </motion.p>
             
             <motion.div 
-              custom={4} initial="hidden" animate="visible" variants={fadeUp}
-              className="flex justify-center items-center relative z-20"
+              custom={3} initial="hidden" animate="visible" variants={fadeUp}
+              className="flex flex-col sm:flex-row gap-4"
             >
-              <div className="relative group inline-block">
-                <div className="absolute -inset-1 bg-gradient-to-r from-beige-300 to-beige-200 rounded-full blur opacity-20 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
-                <a 
-                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative flex justify-center items-center gap-3 bg-beige-100 text-luxury-black px-10 py-5 rounded-full font-medium hover:bg-white transition-all overflow-hidden"
-                >
-                  <MessageCircle size={20} className="relative z-10" />
-                  <span className="relative z-10 text-base tracking-wide uppercase">Message on WhatsApp</span>
-                  <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 ease-out group-hover:scale-100 group-hover:bg-white/30" />
-                </a>
-              </div>
+              <a 
+                href="#contact"
+                className="group relative bg-white text-black px-8 py-4 rounded-full text-base font-medium overflow-hidden flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors"
+              >
+                Get More Customers
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a 
+                href="#services"
+                className="group border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-white px-8 py-4 rounded-full text-base font-medium flex items-center justify-center transition-colors"
+              >
+                See How We Do It
+              </a>
             </motion.div>
           </div>
-        </motion.div>
-      </section>
 
-      {/* Aesthetic Image & Reassurance Break */}
-      <section id="about" className="py-32 relative bg-luxury-black border-y border-white/5 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[50vw] h-full bg-gradient-to-l from-beige-400/5 to-transparent mix-blend-screen" />
-        
-        <div className="max-w-[90rem] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-20 items-center">
-          <motion.div
-            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
-            className="order-2 lg:order-1 relative group"
+          <motion.div 
+            custom={4} initial="hidden" animate="visible" variants={fadeUp}
+            className="flex-1 w-full relative"
           >
-            <div className="absolute -inset-4 bg-gradient-to-tr from-luxury-border to-transparent opacity-50 blur-xl transition-opacity duration-500 group-hover:opacity-100 rounded-3xl" />
-            <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden glass-panel p-2">
-                <div className="w-full h-full rounded-2xl overflow-hidden relative">
-                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/90 via-luxury-black/20 to-transparent" />
+            <div className="aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden glass-panel relative z-10 w-full max-w-lg mx-auto">
+                <div className="w-full h-full relative">
+                    <motion.img 
+                      src="https://elevantemedia.com/ceo.jpg"
+                      alt="CEO"
+                      className="absolute inset-0 w-full h-full object-cover object-[center_30%]" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                     
-                    <div className="absolute bottom-0 left-0 p-8 sm:p-12 w-full">
-                        <div className="w-14 h-14 rounded-full glass-panel flex items-center justify-center mb-6">
-                            <Award size={24} className="text-beige-300" />
+                    <div className="absolute bottom-0 left-0 p-8 w-full">
+                        <div className="flex items-center gap-3 text-white mb-2">
+                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                            <p className="text-sm font-medium tracking-wider uppercase">Generating Leads</p>
                         </div>
-                        <h3 className="font-serif text-3xl mb-3 text-beige-100">Committed to Quality</h3>
-                        <p className="text-beige-200/80 font-light text-lg">Delivering exceptional standards to Accra's finest businesses.</p>
                     </div>
                 </div>
-            </div>
-          </motion.div>
-          
-          <div className="order-1 lg:order-2">
-            <motion.div
-               initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
-            >
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-[1px] bg-beige-300" />
-                <span className="text-beige-300 tracking-[0.2em] uppercase text-xs font-semibold">The Elevante Standard</span>
-              </div>
-              <h2 className="font-serif text-4xl md:text-6xl font-normal leading-[1.1] mb-8">
-                Marketing designed to <br/><span className="text-gradient italic">grow your revenue.</span>
-              </h2>
-              <p className="text-beige-200/70 mb-8 font-light leading-relaxed text-lg md:text-xl">
-                Based in Accra, Elevante Media partners with businesses that want more than just "likes." We help you look like the best in your industry so you can attract high-value, paying clients.
-              </p>
-              <p className="text-beige-200/70 mb-12 font-light leading-relaxed text-lg md:text-xl">
-                We know that as a business owner, your main goal is growth. From shooting professional videos to setting up ads that send customers straight to your WhatsApp, everything we do is focused on giving you a clear return on your investment.
-              </p>
-              
-              <div className="space-y-6">
-                {[
-                  "Make your business look premium so you can charge more",
-                  "Build a predictable system that brings in new leads consistently",
-                  "Create high-quality photos and videos that build instant trust"
-                ].map((item, i) => (
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 + (i * 0.1), duration: 0.5 }}
-                    key={i} 
-                    className="flex items-start gap-4 text-beige-100 group"
-                  >
-                    <div className="mt-1 w-6 h-6 rounded-full border border-beige-300/30 flex items-center justify-center bg-beige-300/5 group-hover:bg-beige-300/20 transition-colors">
-                      <CheckCircle2 size={12} className="text-beige-300" />
-                    </div>
-                    <span className="text-lg font-light text-beige-200 group-hover:text-beige-100 transition-colors">{item}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section - Bento Grid Style */}
-      <section id="services" className="py-32 px-6 lg:px-12 bg-luxury-gray relative">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-beige-400/5 blur-[200px] rounded-full pointer-events-none" />
-        
-        <div className="max-w-[90rem] mx-auto relative z-10">
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-16 mb-16"
-          >
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-8 h-[1px] bg-beige-300" />
-                <span className="text-beige-300 tracking-[0.2em] uppercase text-xs font-semibold">Our Expertise</span>
-              </div>
-              <h2 className="font-serif text-4xl md:text-6xl font-normal leading-[1.1]">Marketing That Brings <br/><span className="italic text-beige-300">Real Results.</span></h2>
-            </div>
-            <p className="text-beige-200/70 font-light text-lg md:text-xl max-w-lg">
-              Everything you need to get attention, build trust, and turn viewers into paying customers.
-            </p>
-          </motion.div>
-
-          {/* Asymmetric Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[300px]">
-            {/* Large Feature Card */}
-            <motion.div 
-               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-               className="md:col-span-2 lg:col-span-2 row-span-2 glass-panel glass-panel-hover rounded-3xl p-10 flex flex-col justify-end relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-beige-300/10 to-transparent blur-3xl group-hover:opacity-100 opacity-0 transition-opacity duration-700" />
-              <Video className="absolute top-10 left-10 text-beige-300/30 group-hover:text-beige-300/80 transition-colors duration-500" size={64} strokeWidth={1} />
-              
-              <div className="relative z-10">
-                <h3 className="font-serif text-3xl md:text-4xl font-medium mb-4 group-hover:text-gradient transition-all duration-500">Professional Photo & Video</h3>
-                <p className="text-lg font-light text-beige-200/80 leading-relaxed max-w-md">High-quality content that shows exactly how good your business is, making customers choose you over everyone else.</p>
-              </div>
-            </motion.div>
-
-            {/* Standard Cards */}
-            <motion.div 
-               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
-               className="glass-panel glass-panel-hover rounded-3xl p-8 flex flex-col justify-between group"
-            >
-              <MessageCircle className="text-beige-300" size={32} strokeWidth={1.5} />
-              <div>
-                <h3 className="font-serif text-xl font-medium mb-2">WhatsApp Leads</h3>
-                <p className="text-sm font-light text-beige-200/70 leading-relaxed">Making it incredibly easy for interested people to message you and book.</p>
-              </div>
-            </motion.div>
-
-            <motion.div 
-               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
-               className="glass-panel glass-panel-hover rounded-3xl p-8 flex flex-col justify-between group"
-            >
-              <MousePointerClick className="text-beige-300" size={32} strokeWidth={1.5} />
-              <div>
-                <h3 className="font-serif text-xl font-medium mb-2">Targeted Ads</h3>
-                <p className="text-sm font-light text-beige-200/70 leading-relaxed">Facebook and Instagram ads that bring in more money than they cost.</p>
-              </div>
-            </motion.div>
-
-            {/* Medium Feature Card */}
-            <motion.div 
-               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
-               className="md:col-span-2 row-span-1 glass-panel glass-panel-hover rounded-3xl p-8 flex flex-col sm:flex-row sm:items-center gap-8 justify-between group"
-            >
-              <div className="flex-1">
-                <h3 className="font-serif text-2xl font-medium mb-3">Premium Branding</h3>
-                <p className="text-base font-light text-beige-200/70 leading-relaxed">Helping your business look so good that you can comfortably and confidently charge higher prices.</p>
-              </div>
-              <div className="w-16 h-16 rounded-full bg-luxury-black border border-white/10 flex items-center justify-center shrink-0 group-hover:border-beige-300/50 transition-colors">
-                <TrendingUp className="text-beige-300" size={24} strokeWidth={1.5} />
-              </div>
-            </motion.div>
-
-            {/* Remaining standard cards */}
-            {[
-              { icon: <Share2 className="text-beige-300" size={28} strokeWidth={1.5} />, title: "Social Media", desc: "Managing your pages so they build an audience of people who actually want to buy." },
-              { icon: <Users className="text-beige-300" size={28} strokeWidth={1.5} />, title: "Local Influencers", desc: "Getting popular creators to effectively recommend your business to their followers." },
-              { icon: <Star className="text-beige-300" size={28} strokeWidth={1.5} />, title: "5-Star Reviews", desc: "Getting you more Google reviews so new customers trust you immediately." },
-              { icon: <Activity className="text-beige-300" size={28} strokeWidth={1.5} />, title: "Clear Reporting", desc: "Simple monthly updates showing exactly how many new leads you got." },
-            ].map((service, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 * i }}
-                className="glass-panel glass-panel-hover rounded-3xl p-8 flex flex-col justify-between group"
-              >
-                {service.icon}
-                <div>
-                  <h3 className="font-serif text-xl font-medium mb-2">{service.title}</h3>
-                  <p className="text-sm font-light text-beige-200/70 leading-relaxed">{service.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trust / Process Section */}
-      <section className="py-32 px-6 lg:px-12 bg-luxury-black relative border-y border-white/5 overflow-hidden">
-        {/* Subtle decorative lines */}
-        <div className="absolute top-0 left-1/3 w-[1px] h-full bg-gradient-to-b from-transparent via-white/5 to-transparent hidden lg:block" />
-        <div className="absolute top-0 right-1/3 w-[1px] h-full bg-gradient-to-b from-transparent via-white/5 to-transparent hidden lg:block" />
-        
-        <div className="max-w-[90rem] mx-auto relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center mb-24">
-            <h2 className="font-serif text-3xl md:text-5xl font-normal mb-6">Why business owners trust us to <span className="italic text-beige-300">grow their sales</span></h2>
-          </motion.div>
-          
-          <div className="grid md:grid-cols-3 gap-16 lg:gap-24 text-center md:text-left relative">
-            {/* Connecting line for desktop */}
-            <div className="hidden md:block absolute top-[28px] left-[15%] w-[70%] h-[1px] bg-white/10" />
-
-            {[
-              { num: "01", title: "Focus on Revenue", desc: "We don't care about 'likes' or followers if they don't buy. We only focus on strategies that bring paying clients through your doors." },
-              { num: "02", title: "We Know Accra", desc: "We understand what local customers want and combine that with world-class marketing so your business stands out." },
-              { num: "03", title: "No Wasted Money", desc: "If an ad isn't bringing you a return, we fix it. We track every cedi spent to make sure your marketing is actually profitable." }
-            ].map((step, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: i * 0.2 }}
-                className="relative"
-              >
-                <div className="flex flex-col md:items-start items-center">
-                  <div className="w-14 h-14 rounded-full bg-luxury-black border border-beige-300/30 flex items-center justify-center text-xl font-serif text-beige-300 mb-8 relative z-10 glow-shadow">
-                    {step.num}
-                  </div>
-                  <h4 className="text-2xl font-serif mb-4 text-beige-100">{step.title}</h4>
-                  <p className="text-base text-beige-200/70 font-light leading-relaxed">{step.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section - High End Form / CTA */}
-      <section id="contact" className="py-32 px-6 lg:px-12 bg-[#0a0a0a] relative overflow-hidden">
-        <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-beige-300/5 blur-[150px] rounded-full mix-blend-screen pointer-events-none" />
-        
-        <div className="max-w-[70rem] mx-auto">
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-            className="glass-panel p-10 md:p-20 rounded-[2.5rem] relative overflow-hidden border border-white/5 shadow-2xl"
-          >
-            {/* Soft inner glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
-
-            <div className="grid md:grid-cols-2 gap-16 relative z-10">
-              <div className="flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="w-8 h-[1px] bg-beige-300" />
-                    <span className="text-beige-300 tracking-[0.2em] uppercase text-xs font-semibold">Initiate Contact</span>
-                  </div>
-                  <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] mb-8">
-                    Ready to <span className="italic text-gradient">get more</span> <br/>clients?
-                  </h2>
-                  <p className="text-beige-200/80 font-light text-lg mb-12 max-w-md">
-                    Reach out today to discuss how we can improve your marketing to bring in a steady stream of ready-to-buy customers.
-                  </p>
-                </div>
-                
-                <div className="space-y-8">
-                  <a href={`tel:${PHONE_NUMBER}`} className="flex items-center gap-6 group">
-                    <div className="w-14 h-14 rounded-full border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-beige-300/50 group-hover:bg-beige-300/10 transition-all duration-300">
-                      <Phone size={20} className="text-beige-100 group-hover:text-beige-300 transition-colors" />
-                    </div>
-                    <div>
-                      <div className="text-xs tracking-widest uppercase text-beige-200/50 mb-1">Direct Line</div>
-                      <div className="text-xl font-light tracking-wide group-hover:text-beige-300 transition-colors">{PHONE_NUMBER}</div>
-                    </div>
-                  </a>
-                  
-                  <a href={`mailto:${EMAIL}`} className="flex items-center gap-6 group">
-                    <div className="w-14 h-14 rounded-full border border-white/10 bg-white/5 flex items-center justify-center group-hover:border-beige-300/50 group-hover:bg-beige-300/10 transition-all duration-300">
-                      <Mail size={20} className="text-beige-100 group-hover:text-beige-300 transition-colors" />
-                    </div>
-                    <div>
-                      <div className="text-xs tracking-widest uppercase text-beige-200/50 mb-1">Digital Correspondence</div>
-                      <div className="text-xl font-light tracking-wide group-hover:text-beige-300 transition-colors">{EMAIL}</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex flex-col justify-center">
-                 <div className="bg-luxury-black/50 border border-white/5 p-10 md:p-12 rounded-[2rem] backdrop-blur-md">
-                   <h3 className="font-serif text-2xl mb-8 flex items-center gap-3">
-                     <Clock className="text-beige-300" size={24} strokeWidth={1.5} /> 
-                     Operating Hours
-                   </h3>
-                   <ul className="space-y-6 text-beige-200/80 font-light text-lg">
-                     <li className="flex justify-between items-center border-b border-white/5 pb-6">
-                       <span>Monday - Saturday</span>
-                       <span className="text-beige-100 font-medium">9:00 AM – 6:00 PM</span>
-                     </li>
-                     <li className="flex justify-between items-center pb-2">
-                       <span>Sunday</span>
-                       <span className="text-beige-100 font-medium">Appointment Only</span>
-                     </li>
-                   </ul>
-                   
-                   <div className="mt-12 pt-10 border-t border-white/5">
-                      <a 
-                        href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group relative overflow-hidden w-full flex justify-center items-center gap-3 bg-beige-100 text-luxury-black px-8 py-5 rounded-full font-medium hover:bg-white transition-all text-lg"
-                      >
-                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
-                        <MessageCircle size={22} className="relative z-10" />
-                        <span className="relative z-10">Start a conversation</span>
-                      </a>
-                   </div>
-                 </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="pt-20 pb-10 bg-luxury-black border-t border-white/5 relative z-10">
-        <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
-          <div className="grid md:grid-cols-2 gap-10 items-end border-b border-white/5 pb-16 mb-10">
-            <div>
-              <div className="font-serif text-4xl mb-6">
-                Elevante<span className="text-beige-300 italic">Media</span>
-              </div>
-              <p className="text-beige-200/60 font-light max-w-sm">
-                Helping businesses get more clients and increase revenue through professional marketing.
-              </p>
             </div>
             
-            <div className="flex md:justify-end gap-12 text-sm tracking-widest uppercase font-medium text-beige-200">
-              <a href="#services" className="hover:text-beige-300 transition-colors">Services</a>
-              <a href="#about" className="hover:text-beige-300 transition-colors">About Us</a>
-              <a href="#contact" className="hover:text-beige-300 transition-colors">Contact</a>
+            {/* Minimalist Grid Pattern Background */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] -z-10 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+          </motion.div>
+        </section>
+
+        {/* Problem Section */}
+        <section id="problem" className="py-24 md:py-32 border-t border-zinc-900">
+          <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <motion.div 
+              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
+              className="mb-16 md:mb-24"
+            >
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-gradient">The Reality.</h2>
+              <p className="text-zinc-400 text-lg max-w-xl">If you are a business owner operating today, you've likely experienced this frustration.</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { 
+                  title: "Posting, but getting nowhere.", 
+                  desc: "You have a great business. You post on Instagram. But your content isn't translating into daily inquiries or walk-ins." 
+                },
+                { 
+                  title: "Inconsistent lead flow.", 
+                  desc: "Some weeks are good, some are quiet. You rely entirely on referrals and word-of-mouth, which makes revenue unpredictable." 
+                },
+                { 
+                  title: "Vanity metrics over sales.", 
+                  desc: "You might be getting likes, comments, and views from random accounts, but your bank account isn't reflecting the attention." 
+                }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}
+                  className="glass-panel p-8 md:p-10 rounded-3xl"
+                >
+                  <h3 className="text-xl font-semibold mb-4 text-white">{item.title}</h3>
+                  <p className="text-zinc-400 leading-relaxed font-light">{item.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
-          
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-beige-200/40 text-sm font-light">
-            <p>
-              © {new Date().getFullYear()} Elevante Media. All rights reserved.
+        </section>
+
+        {/* Solution Section (Elevante Method) */}
+        <section id="solution" className="py-24 md:py-32 bg-zinc-950 border-t border-zinc-900 overflow-hidden relative">
+           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-zinc-900/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 opacity-50" />
+           
+           <div className="max-w-[90rem] mx-auto px-6 lg:px-12 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+                <div className="mb-6">
+                  <span className="text-zinc-500 tracking-wider uppercase text-xs font-bold">The Blueprint</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">
+                  The Elevante<br /><span className="text-gradient">Method.</span>
+                </h2>
+                <p className="text-zinc-400 font-light leading-relaxed text-lg mb-12 max-w-lg">
+                  We don't do "aesthetic only" content. We build an end-to-end client acquisition system that captures attention and turns it into paying customers.
+                </p>
+                
+                <div className="space-y-10">
+                  <div className="flex gap-6">
+                    <div className="shrink-0 w-12 h-12 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center">
+                      <span className="font-bold text-white">1</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">Attention</h3>
+                      <p className="text-zinc-400 font-light">Premium, short-form video that stops the scroll and positions your business as the highest authority in your market.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-6">
+                    <div className="shrink-0 w-12 h-12 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center">
+                      <span className="font-bold text-white">2</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">Strategy</h3>
+                      <p className="text-zinc-400 font-light">Targeted distribution to ensure your content is seen by the exact demographic that can afford and needs your services.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-6">
+                    <div className="shrink-0 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                      <span className="font-bold">3</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2 text-white">Conversion</h3>
+                      <p className="text-zinc-300 font-light">Frictionless systems that move viewers off social media directly into your WhatsApp inbox or booking calendar.</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+                className="relative aspect-[4/3] rounded-3xl overflow-hidden glass-panel"
+              >
+                <img 
+                  src="https://elevantemedia.com/meeting.jpg" 
+                  alt="African business professionals in a meeting" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-8 left-8 right-8">
+                  <div className="glass-panel bg-black/60 backdrop-blur-xl p-6 rounded-2xl border-white/10 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
+                      <TrendingUp className="text-green-500" size={24} strokeWidth={2} />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-bold mb-1">Revenue Focus</h4>
+                      <p className="text-zinc-400 text-sm">Every campaign is measured by ROI, not vanity metrics.</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+           </div>
+        </section>
+
+        {/* Services / Outcomes */}
+        <section id="services" className="py-24 md:py-32 border-t border-zinc-900 relative">
+          <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mb-16 md:mb-24 max-w-2xl">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Built For Conversions.</h2>
+              <p className="text-zinc-400 text-lg font-light">
+                We do not sell generic "social media management." We implement outcome-based solutions designed to acquire customers.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: <Video size={32} strokeWidth={1.5} />,
+                  title: "Customer-Generating Content",
+                  desc: "Studio-grade short-form video and photography that aggressively builds trust and drives intent to buy.",
+                  highlight: true
+                },
+                {
+                  icon: <Target size={32} strokeWidth={1.5} />,
+                  title: "Social Positioning & Strategy",
+                  desc: "Restructuring your profiles from a digital brochure into a highly optimized sales funnel.",
+                  highlight: false
+                },
+                {
+                  icon: <Smartphone size={32} strokeWidth={1.5} />,
+                  title: "WhatsApp & Booking Funnels",
+                  desc: "Automated systems that capture interest and direct high-quality leads straight to your sales channels.",
+                  highlight: false
+                }
+              ].map((service, i) => (
+                <motion.div 
+                  key={i}
+                  initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}
+                  className={`p-10 rounded-3xl border transition-all duration-300 ${
+                    service.highlight 
+                      ? "bg-zinc-900 border-zinc-700" 
+                      : "glass-panel glass-panel-hover"
+                  }`}
+                >
+                  <div className={`mb-6 ${service.highlight ? "text-white" : "text-zinc-400"}`}>
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-white">{service.title}</h3>
+                  <p className="text-zinc-400 leading-relaxed font-light">{service.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Who We Work With */}
+        <section className="py-24 border-t border-zinc-900 bg-zinc-950">
+          <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <div className="flex flex-col md:flex-row gap-12 items-center">
+              <div className="flex-1">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">Who We Work With</h2>
+                <p className="text-zinc-400 text-lg font-light leading-relaxed mb-8 max-w-xl">
+                  We partner exclusively with premium and growth-focused businesses that want to scale, can handle more capacity, and command premium pricing.
+                </p>
+                <ul className="grid grid-cols-2 gap-4 max-w-lg">
+                  {["Aesthetic Clinics", "Luxury Real Estate", "Boutique Hotels", "Premium Restaurants", "High-End Gyms", "Service Businesses"].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-zinc-300">
+                      <CheckCircle2 size={18} className="text-zinc-500" />
+                      <span className="font-medium text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="flex-1 w-full flex justify-center md:justify-end">
+                  <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=600" alt="Hotel Interior" className="rounded-2xl rounded-tr-[4rem] object-cover h-48 w-full" />
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=600" alt="Premium Gym" className="rounded-2xl object-cover h-48 w-full mt-8" />
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=600" alt="Restaurant interior" className="rounded-2xl object-cover h-48 w-full -mt-8" />
+                    <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=600" alt="Clinic interior" className="rounded-2xl rounded-bl-[4rem] object-cover h-48 w-full" />
+                  </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Results / Expected Outcomes */}
+        <section className="py-24 md:py-32 border-t border-zinc-900">
+          <div className="max-w-[90rem] mx-auto px-6 lg:px-12 text-center">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mb-20">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Expected Outcomes.</h2>
+              <p className="text-zinc-400 text-lg max-w-2xl mx-auto font-light">
+                When you partner with Elevante Media, you are making an investment in tangible business growth.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { title: "Maximum Visibility", desc: "Dominate your local market. Become the most recognized and sought-after option in your industry within Accra." },
+                { title: "Qualified Inquiries", desc: "Stop dealing with window shoppers. Attract customers who are pre-sold and ready to buy before they even message you." },
+                { title: "Premium Positioning", desc: "Look so exceptionally good that prospects never question your pricing and choose you over cheaper competitors." }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}
+                  className="glass-panel p-10 rounded-3xl flex flex-col items-center text-center"
+                >
+                  <div className="w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6">
+                    <BarChart3 className="text-white" size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-white">{item.title}</h3>
+                  <p className="text-zinc-400 leading-relaxed font-light">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why Elevante Media */}
+        <section className="py-24 md:py-32 border-t border-zinc-900 bg-zinc-950">
+          <div className="max-w-[90rem] mx-auto px-6 lg:px-12 flex flex-col items-center text-center">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="max-w-3xl">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-8">Creativity Meets <span className="text-zinc-500">Sales.</span></h2>
+              <p className="text-zinc-300 text-lg md:text-xl font-light leading-relaxed mb-6">
+                Most agencies just want to make pretty videos. We care about your bottom line.
+              </p>
+              <p className="text-zinc-400 text-lg md:text-xl font-light leading-relaxed">
+                Every piece of content, every ad, and every system we deploy is designed with one single, ruthless goal: to grow your revenue. We understand business, not just cameras.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Strong CTA Section */}
+        <section id="contact" className="py-32 border-t border-zinc-900 relative overflow-hidden">
+          {/* Subtle Background Accent */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-900/50 via-black to-black -z-10" />
+
+          <div className="max-w-[40rem] mx-auto px-6 text-center">
+             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+                <span className="text-zinc-500 tracking-wider uppercase text-xs font-bold block mb-6">Limited Capacity</span>
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-8">
+                  Let's Scale Your Business.
+                </h2>
+                <p className="text-zinc-400 font-light text-lg mb-12">
+                  If you want more customers and a brand that commands respect, let's talk. We take on a limited number of clients per quarter to ensure we can deliver massive results for everyone we work with.
+                </p>
+                
+                <a 
+                  href="https://wa.me/233200000000" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black px-10 py-5 rounded-full text-lg font-bold hover:bg-zinc-200 transition-transform active:scale-95 inline-flex items-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+                >
+                  Book A Free Strategy Call
+                  <ArrowRight size={20} />
+                </a>
+             </motion.div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-900 py-12 bg-black">
+        <div className="max-w-[90rem] mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-2 relative opacity-50 grayscale">
+              <img 
+                src="/logo.png" 
+                alt="Elevante Media Logo" 
+                className="h-8 w-auto invert brightness-0" 
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling!.classList.remove('hidden');
+                }}
+              />
+              <div className="hidden font-bold text-xl tracking-tight text-white items-center gap-1">
+                Elevante<span className="text-zinc-500 font-normal">Media</span>
+              </div>
+            </div>
+            
+            <p className="text-zinc-600 text-sm font-light">
+              © {new Date().getFullYear()} Elevante Media. Accra, Ghana.
             </p>
-            <div className="flex items-center gap-6">
-               <span className="flex items-center gap-2">
-                 <MapPin size={14} /> Accra, Ghana
-               </span>
+            
+            <div className="flex gap-6 text-sm text-zinc-500">
+              <a href="#" className="hover:text-white transition-colors">Instagram</a>
+              <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
             </div>
-          </div>
         </div>
       </footer>
     </div>
