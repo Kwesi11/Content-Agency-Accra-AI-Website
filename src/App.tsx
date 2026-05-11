@@ -310,15 +310,15 @@ export default function App() {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 { 
-                  img: "/apartment.jpg", 
+                  img: "https://elevantemedia.com/apartment.jpg.png", 
                   text: "High-end real estate visuals designed to attract premium clients." 
                 },
                 { 
-                  img: "/food.jpg",
+                  img: "https://elevantemedia.com/food.jpg.png",
                   text: "Professional food content that makes brands stand out online." 
                 },
                 { 
-                  img: "/gym.jpg", 
+                  img: "https://elevantemedia.com/gym.jpg.png", 
                   text: "Powerful fitness visuals built to capture attention and engagement." 
                 }
               ].map((item, i) => (
