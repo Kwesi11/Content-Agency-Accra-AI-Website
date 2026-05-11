@@ -48,8 +48,8 @@ export default function App() {
           </div>
           
           <div className="hidden md:flex items-center gap-10 text-sm tracking-wide text-zinc-400">
-            <a href="#problem" className="hover:text-white transition-colors duration-300">The Problem</a>
             <a href="#solution" className="hover:text-white transition-colors duration-300">Our Method</a>
+            <a href="#work" className="hover:text-white transition-colors duration-300">Our Work</a>
             <a href="#services" className="hover:text-white transition-colors duration-300">Services</a>
             <a href="#contact" className="hover:text-white transition-colors duration-300">Contact</a>
           </div>
@@ -69,7 +69,7 @@ export default function App() {
 
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="relative px-6 lg:px-12 pt-24 pb-32 md:pt-40 md:pb-48 max-w-[90rem] mx-auto flex flex-col md:flex-row items-center gap-16">
+        <section className="relative px-6 lg:px-12 pt-12 pb-20 md:pt-20 md:pb-24 max-w-[90rem] mx-auto flex flex-col md:flex-row items-center gap-16">
           <div className="flex-1 relative z-10 w-full md:w-1/2">
             <motion.div custom={0} initial="hidden" animate="visible" variants={fadeUp} className="mb-6">
               <span className="bg-zinc-900 border border-zinc-800 text-zinc-300 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">
@@ -114,9 +114,9 @@ export default function App() {
 
           <motion.div 
             custom={4} initial="hidden" animate="visible" variants={fadeUp}
-            className="flex-1 w-full relative"
+            className="flex-1 w-full relative md:-translate-y-8 lg:-translate-y-12"
           >
-            <div className="aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden glass-panel relative z-10 w-full max-w-lg mx-auto">
+            <div className="aspect-[3/5] sm:aspect-[2/3] lg:aspect-[5/8] rounded-3xl overflow-hidden glass-panel relative z-10 w-full max-w-lg mx-auto">
                 <div className="w-full h-full relative">
                     <motion.img 
                       src="https://elevantemedia.com/ceo.jpg"
@@ -140,11 +140,11 @@ export default function App() {
         </section>
 
         {/* Problem Section */}
-        <section id="problem" className="py-24 md:py-32 border-t border-zinc-900">
+        <section id="problem" className="pt-10 pb-12 md:pt-12 md:pb-16 border-t border-zinc-900">
           <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
             <motion.div 
               initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
-              className="mb-16 md:mb-24"
+              className="mb-10 md:mb-16"
             >
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-gradient">The Reality.</h2>
               <p className="text-zinc-400 text-lg max-w-xl">If you are a business owner operating today, you've likely experienced this frustration.</p>
@@ -179,7 +179,7 @@ export default function App() {
         </section>
 
         {/* Solution Section (Elevante Method) */}
-        <section id="solution" className="py-24 md:py-32 bg-zinc-950 border-t border-zinc-900 overflow-hidden relative">
+        <section id="solution" className="pt-16 pb-24 md:pt-20 md:pb-32 bg-zinc-950 border-t border-zinc-900 overflow-hidden relative">
            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-zinc-900/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 opacity-50" />
            
            <div className="max-w-[90rem] mx-auto px-6 lg:px-12 relative z-10">
@@ -250,6 +250,98 @@ export default function App() {
               </motion.div>
             </div>
            </div>
+        </section>
+
+        {/* Featured Work */}
+        <section id="work" className="pt-12 pb-24 md:pt-16 md:pb-32 bg-black border-t border-zinc-900 relative">
+          <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mb-16 md:mb-24 flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">
+                Our Work
+              </h2>
+              <p className="text-zinc-400 font-light leading-relaxed text-lg max-w-2xl mx-auto">
+                A selection of cinematic visual content designed to help businesses stand out, build trust, and attract customer attention.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { video: "/reel1.mp4", text: "Premium short-form content designed to attract attention" },
+                { video: "/reel2.mp4", text: "Visual storytelling built for modern businesses" },
+                { video: "/reel3.mp4", text: "Content focused on visibility and customer engagement" }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}
+                  className="group relative flex flex-col items-center text-center"
+                >
+                  <div className="w-full relative aspect-[9/16] rounded-[2rem] overflow-hidden glass-panel border border-zinc-800 mb-8 max-w-[320px] mx-auto">
+                    <video 
+                      src={item.video} 
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 group-hover:opacity-100 grayscale hover:grayscale-0" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
+                  </div>
+                  <p className="text-zinc-400 font-light leading-relaxed max-w-[280px]">
+                    {item.text}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Visual Showcase */}
+        <section className="py-24 md:py-32 bg-black border-t border-zinc-900 relative">
+          <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mb-16 md:mb-24 flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">
+                Visual Showcase
+              </h2>
+              <p className="text-zinc-400 font-light leading-relaxed text-lg max-w-2xl mx-auto">
+                Premium visuals crafted to capture attention and elevate brands.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { 
+                  img: "/apartment.jpg", 
+                  text: "High-end real estate visuals designed to attract premium clients." 
+                },
+                { 
+                  img: "/food.jpg",
+                  text: "Professional food content that makes brands stand out online." 
+                },
+                { 
+                  img: "/gym.jpg", 
+                  text: "Powerful fitness visuals built to capture attention and engagement." 
+                }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}
+                  className="group relative flex flex-col items-center text-center"
+                >
+                  <div className="w-full relative aspect-square sm:aspect-[4/5] rounded-[2rem] overflow-hidden glass-panel border border-zinc-800 mb-8 mx-auto">
+                    <img 
+                      src={item.img} 
+                      alt="Visual showcase" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100 grayscale hover:grayscale-0" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
+                  </div>
+                  <p className="text-zinc-400 font-light leading-relaxed px-2">
+                    {item.text}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* Services / Outcomes */}
