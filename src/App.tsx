@@ -56,7 +56,7 @@ export default function App() {
           
           <div className="flex items-center gap-4">
             <a 
-              href="https://wa.me/233200000000" 
+              href="https://wa.me/233536106660?text=Hi,%20I’m%20interested%20in%20learning%20more%20about%20your%20marketing%20services%20for%20my%20business." 
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white text-black px-6 py-2.5 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors duration-300"
@@ -97,7 +97,9 @@ export default function App() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <a 
-                href="#contact"
+                href="https://wa.me/233536106660?text=Hi,%20I’m%20interested%20in%20learning%20more%20about%20your%20marketing%20services%20for%20my%20business."
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative bg-white text-black px-8 py-4 rounded-full text-base font-medium overflow-hidden flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors"
               >
                 Get More Customers
@@ -489,7 +491,7 @@ export default function App() {
                 </p>
                 
                 <a 
-                  href="https://wa.me/233200000000" 
+                  href="https://wa.me/233536106660?text=Hi,%20I’m%20interested%20in%20learning%20more%20about%20your%20marketing%20services%20for%20my%20business." 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-white text-black px-10 py-5 rounded-full text-lg font-bold hover:bg-zinc-200 transition-transform active:scale-95 inline-flex items-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.1)]"
