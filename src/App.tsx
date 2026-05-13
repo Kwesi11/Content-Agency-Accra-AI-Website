@@ -81,8 +81,7 @@ export default function App() {
               custom={1} initial="hidden" animate="visible" variants={fadeUp}
               className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-8"
             >
-              We don't just create content.<br />
-              <span className="text-gradient">We get you customers.</span>
+              We create content that turns attention into <span className="text-gradient">paying customers.</span>
             </motion.h1>
             
             <motion.p 
